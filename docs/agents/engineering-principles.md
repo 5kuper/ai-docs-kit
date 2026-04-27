@@ -43,6 +43,13 @@ These principles apply unless a more specific document says otherwise.
 - Write comments and internal documentation in the primary language chosen by the repository.
 - Keep changes easy to review and their intent easy to understand.
 
+## Operational Transparency
+- If the preferred tool, command, or workflow is unavailable, assess whether the fallback changes the result, risk, or scope.
+- If the fallback materially affects correctness, safety, scope, or decision-making, stop and discuss the tradeoff before continuing.
+- If the fallback only affects speed, convenience, or tooling ergonomics, continue with the work and report the fallback clearly afterward.
+- Do not present a workaround as the ideal path.
+- If a fallback becomes the normal path for the repository, update the relevant documentation instead of relying on repeated ad hoc explanations.
+
 ## When Unsure
 - Make the safest reasonable assumption that preserves current behavior and limits blast radius.
 - If a decision has non-obvious product, contract, data, or operational consequences, make the tradeoff explicit, ask the user before committing to it, and defer to more specific guidance when available.
