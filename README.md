@@ -1,50 +1,73 @@
 # ai-docs-kit
 
-A reusable kit of documents, templates, and helper scripts for setting up agent guidance in other repositories.
+A reusable kit of guidance documents, role profiles, and bundled skills for setting up agent guidance in other repositories.
 
 This kit will evolve with experience from real agent workflows in real projects.
 
+## Model
+
+The kit separates agent guidance into three layers:
+
+- `guidance/`: durable rules and stack or design guidance.
+- `roles/`: reusable operating profiles for agents.
+- `skills/`: task-specific workflows and bundled helper assets.
+
 ## How To Use
 
-1. Copy `AGENTS.setup.md` and the kit files you want the agent to consider into the target repository.
-2. Tell the agent: `use AGENTS.setup.md`.
-3. Let the agent create `AGENTS.md` and `docs/agents/project-guide.md` when repository-specific guidance is needed.
-4. Keep only the documents and scripts that actually fit the repository.
+1. Copy this kit into the target repository.
+2. Tell the agent: `use ai-docs-kit/AGENTS.setup.md`.
+3. Let the agent copy applicable `guidance/`, `roles/`, and `skills/` content into the target repository's `agents/` directory.
+4. Let the agent create `AGENTS.md` when repository-specific guidance is needed.
+5. Keep only the files that actually fit the repository.
+
+After setup, the copied `ai-docs-kit/` directory is usually removed unless the repository intentionally keeps it.
 
 ## Layout
 
-- `docs/agents/`: shared documents and project templates for the target repository.
-- `docs/agents/stack/`: stack-specific guides, such as .NET guidance.
-- `docs/agents/workflow/`: workflow-specific guides, such as verification and task planning.
-- `docs/agents/design/`: design and architecture guides.
-- `scripts/`: reusable helper scripts.
+- `guidance/`: shared guidance documents for target repositories.
+- `guidance/stack/`: stack-specific guides, such as .NET guidance.
+- `guidance/design/`: design and architecture guides.
+- `roles/`: reusable agent role profiles.
+- `skills/`: bundled skills for reusable agent workflows.
 
-## Scripts
+## Target Layout
 
-### `scripts/bootstrap-agent-environment.ps1`
-Sets up a shared agent environment for a machine or user profile.
+When applied to a target repository, copied kit content should live under:
 
-It:
-- prepares `%USERPROFILE%\.agent` and its shared folders;
-- checks that `git` is available;
-- configures `git safe.directory` for the trust scope you choose:
-  specific repositories, repositories under a shared root, or all repositories with `-TrustAllSafeDirectories`.
-- accepts explicit repo or worktree roots when the repository layout is not the default one.
+```text
+agents/
+  guidance/
+  roles/
+  skills/
+```
 
-Use it when you want to prepare the shared agent environment up front and reduce repeated fixes later.
+## Skills
 
-### `scripts/dotnet-wrapper.ps1`
-Runs `dotnet` commands in a predictable agent or sandbox environment.
+Some skills are original to this kit, and some are vendored from third-party skill libraries. Vendored skills are kept in-repo so the kit stays self-contained.
 
-It:
-- prepares process-local paths for app data, CLI home, MSBuild extensions, and NuGet packages;
-- uses `%USERPROFILE%\.agent` when possible and falls back to repo-local `.agent-local` when needed;
-- creates a minimal `NuGet.Config` for the session;
-- runs a safe `restore` before `build`, `test`, `publish`, or `pack` unless restore is explicitly skipped;
-- accepts an explicit `-RepoRoot` when the repository layout is not the default one;
-- restores the original environment after the command finishes.
+- `skills/acquire-codebase-knowledge/`: creates evidence-backed codebase knowledge documents.
+- `skills/dotnet-command/`: runs .NET CLI commands through a predictable agent-friendly wrapper.
+- `skills/doublecheck/`: verifies factual claims with sourced checks.
+- `skills/task-planning/`: creates compact implementation-oriented task plans.
+- `skills/verification-before-completion/`: requires fresh verification before completion claims.
 
-## Recommended Use
+Skill sources:
 
-1. Run `scripts/bootstrap-agent-environment.ps1` once if agent environment setup is needed.
-2. Use `scripts/dotnet-wrapper.ps1` for .NET commands in agent or sandbox sessions.
+- Original to this kit: `dotnet-command`, `task-planning`.
+- Vendored from GitHub Awesome Copilot: `acquire-codebase-knowledge`, `doublecheck`.
+- Vendored from Superpowers: `verification-before-completion`.
+
+## Roles
+
+Roles are reusable operating profiles for agents. They describe when to use a working mode, what that mode is responsible for, what it must not do, and what kind of output it should produce.
+
+They are guidance files, not a guarantee that every agent runtime will enforce role switching automatically. In target repositories, `AGENTS.md` should route agents to relevant roles when the repository adopts explicit role-based work.
+
+- `roles/assistant.md`: default role when no specialized role clearly fits.
+- `roles/architect.md`: technical direction, tradeoffs, and architecture decisions.
+- `roles/coder.md`: implementation work across code, documentation, configuration, and tests.
+- `roles/reviewer.md`: independent review of changes, risks, and verification quality.
+
+## Third-Party Material
+
+Vendored third-party skills are listed in `THIRD_PARTY_NOTICES.md`.

@@ -11,69 +11,82 @@ After setup is complete, this file should be removed unless the repository expli
 
 ## Core Documents
 These are the default core documents to use in most repositories:
-- `docs/agents/engineering-principles.md`
-- `docs/agents/styleguide.md`
-- `docs/agents/environment.md`
+- `agents/guidance/engineering-principles.md`
+- `agents/guidance/styleguide.md`
 
 Use them unless the target repository clearly does not need them.
 
-If the repository has `docs/agents/project-guide.md`, treat it as a core required document for the generated `AGENTS.md`.
+## Target Mapping
+Copy applicable kit artifacts into the target repository using this mapping:
 
-## Additional Shared Documents
-Add shared documents only when they match the target repository.
+- `guidance/*` -> `agents/guidance/*`
+- `roles/*` -> `agents/roles/*`
+- `skills/*` -> `agents/skills/*`
+
+Do not copy artifacts that do not apply to the target repository.
+
+Use the default artifact policy below:
+- copy default artifacts unless the target repository clearly does not need them;
+- copy evidence-triggered artifacts when repository evidence or the user request triggers them;
+- copy explicit opt-in artifacts only when the user or repository asks for them.
+
+## Additional Guidance
+Add shared guidance only when it matches the target repository.
 
 ### Stack
-- `docs/agents/stack/dotnet.md`
-- `docs/agents/stack/dotnet-styleguide.md`
+- `agents/guidance/stack/dotnet.md`
+- `agents/guidance/stack/dotnet-styleguide.md`
 
-Use stack documents only when the repository uses that stack.
-
-### Workflow
-- `docs/agents/workflow/verification.md`
-- `docs/agents/workflow/task-planning.md`
-
-Use workflow documents only when the repository wants explicit verification or task-planning conventions.
+Use stack guidance only when the repository uses that stack.
 
 ### Design
-- `docs/agents/design/light-clean-architecture-ddd.md`
+- `agents/guidance/design/light-clean-architecture-ddd.md`
 
-Use design documents only when the repository follows that architectural style.
+Use design guidance only when the repository follows that architectural style.
 
-## Project-Specific Guidance
-If the repository needs a local architecture or repository guide, create `docs/agents/project-guide.md` from:
-- `docs/agents/project-guide.template.md`
+## Role Profiles
+Role profiles are default artifacts. Use them as the default operating model for agent work unless the target repository explicitly does not want role-based guidance.
 
-Fill it with repository-specific structure, architecture, contracts, integrations, risks, and local documentation links.
+- `agents/roles/assistant.md`
+- `agents/roles/architect.md`
+- `agents/roles/coder.md`
+- `agents/roles/reviewer.md`
 
-In the generated `AGENTS.md`, treat `docs/agents/project-guide.md` as:
-- a core required document when it exists;
-- the repository-specific routing source;
-- the owner of the `Local Documentation Map` used to discover deeper local documents.
+Do not copy `agents/roles/role.template.md` unless the repository wants to draft new local roles.
 
-Delete the template afterward unless the repository explicitly wants to keep local templates under version control.
+If role profiles are copied, treat `agents/roles/assistant.md` as the default role unless a more specific copied role clearly applies.
+
+## Bundled Skills
+Bundled skills are default artifacts. Copy them by default and route their use by trigger in the generated `AGENTS.md`; do not make every copied skill mandatory for every task.
+
+- `agents/skills/acquire-codebase-knowledge/`
+- `agents/skills/dotnet-command/`
+- `agents/skills/doublecheck/`
+- `agents/skills/task-planning/`
+- `agents/skills/verification-before-completion/`
 
 ## What The Agent Should Do
 1. Inspect the repository structure and existing documentation.
-2. Identify which core, stack, workflow, and design documents actually fit the repository.
-3. Create `docs/agents/project-guide.md` from `docs/agents/project-guide.template.md` when project-specific guidance is needed.
-4. Remove copied kit files that do not apply to the repository.
+2. Apply the default artifact policy: copy default artifacts, add evidence-triggered artifacts, and omit only clearly irrelevant artifacts.
+3. Copy applicable reusable `guidance/`, `roles/`, and `skills/` content from this kit into the target repository's `agents/` directory.
+4. Remove unused copied kit artifacts and remove the temporary `ai-docs-kit/` directory after setup unless it is intentionally kept.
 5. Create `AGENTS.md` as a hard entry gate that links only to documents that exist and apply.
 6. In the generated `AGENTS.md`, require a fixed startup flow before substantial work begins.
-7. Make `docs/agents/project-guide.md` the repository-specific routing source in that startup flow when it exists.
-8. Require readers to inspect the `Local Documentation Map` in `docs/agents/project-guide.md` and read every linked repository-local document that applies to the current task.
-9. In the generated `AGENTS.md`, make repository-local documents mandatory when the task touches an area named in the `Local Documentation Map`.
-10. If relevance is unclear, instruct readers to default to reading more rather than less.
-11. Split the generated `AGENTS.md` into:
+7. If relevance is unclear, instruct readers to default to reading more rather than less.
+8. Split the generated `AGENTS.md` into:
     - core required documents;
-    - additional shared documents with explicit triggers;
-    - repository-local trigger rules derived from `docs/agents/project-guide.md`.
-12. Require the generated `AGENTS.md` to tell agents to explicitly acknowledge:
+    - additional guidance with explicit triggers;
+    - role profiles with explicit triggers;
+    - bundled skills with explicit triggers;
+    - repository-local routing rules when repository-local artifacts exist.
+9. Require the generated `AGENTS.md` to tell agents to explicitly acknowledge:
     - which core documents were read;
-    - which repository-local documents were selected as relevant;
-    - that the routing decision came from `docs/agents/project-guide.md`;
-    - and, when no repository-local documents apply, to say so explicitly.
-13. Remove `AGENTS.setup.md` after `AGENTS.md` is in place unless the repository explicitly wants to keep setup instructions.
-14. Omit irrelevant sections and links.
+    - which role profile is active or why no specialized role applies;
+    - which bundled skills are relevant to the current task;
+    - which repository-local artifacts were selected as relevant;
+    - and, when no repository-local artifacts apply, to say so explicitly.
+10. Remove `AGENTS.setup.md` after `AGENTS.md` is in place unless the repository explicitly wants to keep setup instructions.
+11. Omit irrelevant sections and links.
 
 ## Output Requirements
 - The output file must be named `AGENTS.md`.
@@ -89,9 +102,11 @@ Delete the template afterward unless the repository explicitly wants to keep loc
 - Purpose
 - Required Startup Flow
 - Core Required Documents
-- Repository-Local Documents
-- Additional Shared Documents
-- Repository-Local Trigger Matrix
+- Role Profiles
+- Bundled Skills
+- Additional Guidance
+- Repository-Local Artifacts
+- Routing Matrix
 - Required Acknowledgement
 - Precedence
 - Maintenance Rule
@@ -99,19 +114,17 @@ Delete the template afterward unless the repository explicitly wants to keep loc
 ## Precedence
 Use this order when guidance conflicts:
 1. `AGENTS.md` defines the reading protocol and acknowledgement requirements.
-2. `docs/agents/project-guide.md` defines repository-specific routing and local-document discovery.
-3. The most specific linked workflow, stack, design, architecture, or task document wins for its topic.
-4. General documents in `docs/agents/` fill the remaining defaults.
+2. The most specific linked stack, design, architecture, role, skill, or task document wins for its topic.
+3. General guidance in `agents/guidance/` fills the remaining defaults.
 
 If there is no conflict, all linked documents apply together.
 
 ## Maintenance Rules
 - Keep `AGENTS.md` minimal.
 - Keep `AGENTS.md` focused on reading order, routing, acknowledgement, and precedence.
-- Put durable cross-project guidance in the reusable documents.
-- Put repository-specific guidance in a local project guide and linked repository-local documents.
-- Add stack, workflow, or design documents only when the repository actually uses them.
-- Remove copied documents that the repository does not use.
+- Put durable cross-project guidance in reusable guidance artifacts.
+- Add stack, design, role, or skill artifacts only when the repository actually uses them.
+- Remove copied artifacts that the repository does not use.
 - Remove this setup file after it has been applied unless the repository explicitly keeps setup docs.
 - Do not invent files, commands, or conventions that are not present in the repository.
 
@@ -119,9 +132,7 @@ If there is no conflict, all linked documents apply together.
 Before finishing, verify that:
 - every linked file exists;
 - every linked file is relevant to the repository;
-- the generated `AGENTS.md` uses `docs/agents/project-guide.md` as the routing source when it exists;
-- the generated `AGENTS.md` requires repository-local discovery through `Local Documentation Map` when that map exists;
-- the generated `AGENTS.md` separates core required documents, additional shared documents, and repository-local triggers;
+- the generated `AGENTS.md` separates core required documents, additional guidance, role profiles, bundled skills, and repository-local routing;
 - the generated `AGENTS.md` requires explicit acknowledgement before substantial work;
 - no copied kit files remain without a clear purpose;
 - `AGENTS.setup.md` has been removed unless there is a clear reason to keep it;
