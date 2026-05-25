@@ -3,7 +3,7 @@
 ## Scope
 This document defines the default rules for .NET and ASP.NET Core work in this repository.
 
-It applies together with `docs/agents/engineering-principles.md` unless a more specific document says otherwise.
+It applies together with `agents/guidance/engineering-principles.md` unless a more specific document says otherwise.
 
 ## Required Skill
 - Before performing .NET-specific implementation, review, refactoring, or architecture work, use the installed `$aspnet-core` skill.
@@ -18,8 +18,8 @@ It applies together with `docs/agents/engineering-principles.md` unless a more s
 - Introducing or changing framework-level packages, target frameworks, SDK assumptions, or platform features.
 
 ## Command Execution
-- Use `scripts/dotnet-wrapper.ps1` for `dotnet restore`, `dotnet build`, `dotnet test`, `dotnet publish`, and `dotnet pack` in agent or sandbox sessions.
-- The wrapper exists to make .NET CLI execution more predictable in agent and sandbox environments by handling environment-level setup for the command.
+- Use the bundled `dotnet-command` skill for `dotnet restore`, `dotnet build`, `dotnet test`, `dotnet publish`, and `dotnet pack` in agent or sandbox sessions.
+- The skill's wrapper exists to make .NET CLI execution more predictable in agent and sandbox environments by handling environment-level setup for the command.
 - Treat the wrapper as the default command path for .NET CLI work when repository-local guidance does not say otherwise.
 - Use direct `dotnet` commands only when the repository explicitly documents that they are safe in the current environment.
 
@@ -34,7 +34,6 @@ It applies together with `docs/agents/engineering-principles.md` unless a more s
 - Run the smallest relevant build or test checks that materially reduce risk for the change.
 - Prefer targeted project or test runs before broader solution-wide verification when that is sufficient.
 - Expand verification when the change affects framework wiring, hosting, routing, configuration, authentication, authorization, persistence, or shared contracts.
-- Use `docs/agents/workflow/verification.md` for more specific testing guidance.
 
 ## Documentation
 - Update repository guidance when .NET-specific workflows, build or test expectations, configuration patterns, or hosting behavior change.

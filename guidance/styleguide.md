@@ -3,7 +3,7 @@
 ## Scope
 This document defines the default style and repository conventions for this project.
 
-It complements `docs/agents/engineering-principles.md`. Use a more specific document when one exists for a particular stack, language, or subsystem.
+It complements `agents/guidance/engineering-principles.md`. Use a more specific document when one exists for a particular stack, language, or subsystem.
 
 ## Language
 - Write code comments and internal technical documentation in the primary language chosen by this repository.

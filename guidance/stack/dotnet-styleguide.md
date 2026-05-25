@@ -3,7 +3,7 @@
 ## Scope
 This document defines repository-specific .NET and ASP.NET Core style overrides and clarifications.
 
-Use it together with `docs/agents/stack/dotnet.md`. Do not use this document to restate general .NET platform guidance that already comes from the required `$aspnet-core` skill.
+Use it together with `agents/guidance/stack/dotnet.md`. Do not use this document to restate general .NET platform guidance that already comes from the required `$aspnet-core` skill.
 
 ## Logging
 - Use structured logging with named placeholders.
