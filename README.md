@@ -48,12 +48,13 @@ Some skills are original to this kit, and some are vendored from third-party ski
 - `skills/acquire-codebase-knowledge/`: creates evidence-backed codebase knowledge documents.
 - `skills/dotnet-command/`: runs .NET CLI commands through a predictable agent-friendly wrapper.
 - `skills/doublecheck/`: verifies factual claims with sourced checks.
+- `skills/easy-specs/`: creates review-friendly design and task specs.
 - `skills/task-planning/`: creates compact implementation-oriented task plans.
 - `skills/verification-before-completion/`: requires fresh verification before completion claims.
 
 Skill sources:
 
-- Original to this kit: `dotnet-command`, `task-planning`.
+- Original to this kit: `dotnet-command`, `easy-specs`, `task-planning`.
 - Vendored from GitHub Awesome Copilot: `acquire-codebase-knowledge`, `doublecheck`.
 - Vendored from Superpowers: `verification-before-completion`.
 

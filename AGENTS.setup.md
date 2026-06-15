@@ -62,6 +62,7 @@ Bundled skills are default artifacts. Copy them by default and route their use b
 - `agents/skills/acquire-codebase-knowledge/`
 - `agents/skills/dotnet-command/`
 - `agents/skills/doublecheck/`
+- `agents/skills/easy-specs/`
 - `agents/skills/task-planning/`
 - `agents/skills/verification-before-completion/`
 
