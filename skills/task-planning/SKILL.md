@@ -1,26 +1,36 @@
 ---
 name: task-planning
-description: Use when the user asks for a task plan, implementation plan, work breakdown, sequencing, coordination notes, or when work needs explicit scope, decisions, risks, or verification notes before execution. Do not use for small, isolated, or obvious changes that do not need extra coordination.
+description: Create or update durable task documents and implementation plans intended for review, handoff, coordination, or continued execution. Use when the user explicitly requests a task doc or when the work requires a persistent planning artifact. Do not use for the agent's own execution planning, tool-call sequencing, status checklists, or small plans that can be handled with update_plan or a short chat response.
 ---
 
 # Task Planning
 
-Create compact, implementation-oriented task plans for work that needs explicit scope, decisions, sequencing, coordination, or verification notes.
+Create compact, implementation-oriented task documents that preserve scope, decisions, sequencing, coordination, and verification notes across execution.
+
+This skill creates a planning artifact for review, handoff, or continued work. It does not manage the agent's internal execution steps.
 
 ## Workflow
 
-1. Decide whether a dedicated plan is needed.
-2. If a dedicated plan is not needed, state that no separate plan is needed and provide a lightweight outline only when useful.
-3. Identify the plan location from repository guidance, existing task areas, or user instruction.
-4. If no active task area is defined, do not invent one. Provide the plan in the response unless the user asks to create a file.
-5. Create or update one focused plan for the task.
-6. Validate that the plan has a clear goal, scope, decisions, concrete steps, out-of-scope items, and verification notes when relevant.
+1. Confirm that the requested output is a task document or another persistent planning artifact.
+2. Identify the plan location from repository guidance, existing task areas, or user instruction.
+3. If no active task area is defined, do not invent one. Provide the plan in the response only when the user explicitly requests a chat-delivered planning artifact.
+4. Create or update one focused plan for the task.
+5. Validate that the plan has a clear goal, scope, decisions, concrete steps, out-of-scope items, and verification notes when relevant.
 
 ## When To Create A Task Plan
 
-- Create a dedicated task plan when the work needs explicit scope, decisions, sequencing, or verification notes.
-- Skip a dedicated plan for small, isolated, or obvious changes that do not need extra coordination.
+- Create a dedicated task plan when the user requests a task doc or implementation plan as a deliverable.
+- Also create one when implementation needs a persistent source of truth for scope, decisions, coordination, handoff, or verification.
+- Skip a dedicated plan for small, isolated, or obvious changes that do not need a persistent artifact.
 - Prefer one plan per meaningful task instead of mixing unrelated work into the same document.
+
+## Do Not Use For
+
+- The agent's own step-by-step execution planning.
+- Tool-call sequencing or brief progress checklists.
+- Routine use of `update_plan` to track work during the current task.
+- Small plans or outlines that fit naturally in a short chat response.
+- Deciding whether a task document is needed when there is no concrete reason to create one.
 
 ## Task Areas
 
@@ -104,7 +114,7 @@ Consistency matters more than ceremony.
 ## Output Contract
 
 - For persistent plans, create or update a single focused markdown file.
-- For chat-only plans, provide the same structure in the response.
+- When the user explicitly requests a planning deliverable in chat, provide the same compact structure in the response.
 - Include `Out Of Scope` when scope could expand.
 - Include verification notes when implementation risk is non-trivial.
 
