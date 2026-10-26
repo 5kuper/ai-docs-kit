@@ -20,7 +20,6 @@ Use them unless the target repository clearly does not need them.
 Copy applicable kit artifacts into the target repository using this mapping:
 
 - `guidance/*` -> `agents/guidance/*`
-- `roles/*` -> `agents/roles/*`
 - `skills/*` -> `agents/skills/*`
 
 Do not copy artifacts that do not apply to the target repository.
@@ -44,23 +43,10 @@ Use stack guidance only when the repository uses that stack.
 
 Use design guidance only when the repository follows that architectural style.
 
-## Role Profiles
-Role profiles are default artifacts. Use them as the default operating model for agent work unless the target repository explicitly does not want role-based guidance.
-
-- `agents/roles/assistant.md`
-- `agents/roles/architect.md`
-- `agents/roles/coder.md`
-- `agents/roles/reviewer.md`
-
-Do not copy `agents/roles/role.template.md` unless the repository wants to draft new local roles.
-
-If role profiles are copied, treat `agents/roles/assistant.md` as the default role unless a more specific copied role clearly applies.
-
 ## Bundled Skills
 Bundled skills are default artifacts. Copy them by default and route their use by trigger in the generated `AGENTS.md`; do not make every copied skill mandatory for every task.
 
 - `agents/skills/acquire-codebase-knowledge/`
-- `agents/skills/dotnet-command/`
 - `agents/skills/doublecheck/`
 - `agents/skills/easy-specs/`
 - `agents/skills/task-planning/`
@@ -69,7 +55,7 @@ Bundled skills are default artifacts. Copy them by default and route their use b
 ## What The Agent Should Do
 1. Inspect the repository structure and existing documentation.
 2. Apply the default artifact policy: copy default artifacts, add evidence-triggered artifacts, and omit only clearly irrelevant artifacts.
-3. Copy applicable reusable `guidance/`, `roles/`, and `skills/` content from this kit into the target repository's `agents/` directory.
+3. Copy applicable reusable `guidance/` and `skills/` content from this kit into the target repository's `agents/` directory.
 4. Remove unused copied kit artifacts and remove the temporary `ai-docs-kit/` directory after setup unless it is intentionally kept.
 5. Create `AGENTS.md` as a hard entry gate that links only to documents that exist and apply.
 6. In the generated `AGENTS.md`, require a fixed startup flow before substantial work begins.
@@ -77,12 +63,10 @@ Bundled skills are default artifacts. Copy them by default and route their use b
 8. Split the generated `AGENTS.md` into:
     - core required documents;
     - additional guidance with explicit triggers;
-    - role profiles with explicit triggers;
     - bundled skills with explicit triggers;
     - repository-local routing rules when repository-local artifacts exist.
 9. Require the generated `AGENTS.md` to tell agents to explicitly acknowledge:
     - which core documents were read;
-    - which role profile is active or why no specialized role applies;
     - which bundled skills are relevant to the current task;
     - which repository-local artifacts were selected as relevant;
     - and, when no repository-local artifacts apply, to say so explicitly.
@@ -103,7 +87,6 @@ Bundled skills are default artifacts. Copy them by default and route their use b
 - Purpose
 - Required Startup Flow
 - Core Required Documents
-- Role Profiles
 - Bundled Skills
 - Additional Guidance
 - Repository-Local Artifacts
@@ -115,7 +98,7 @@ Bundled skills are default artifacts. Copy them by default and route their use b
 ## Precedence
 Use this order when guidance conflicts:
 1. `AGENTS.md` defines the reading protocol and acknowledgement requirements.
-2. The most specific linked stack, design, architecture, role, skill, or task document wins for its topic.
+2. The most specific linked stack, design, architecture, skill, or task document wins for its topic.
 3. General guidance in `agents/guidance/` fills the remaining defaults.
 
 If there is no conflict, all linked documents apply together.
@@ -124,7 +107,7 @@ If there is no conflict, all linked documents apply together.
 - Keep `AGENTS.md` minimal.
 - Keep `AGENTS.md` focused on reading order, routing, acknowledgement, and precedence.
 - Put durable cross-project guidance in reusable guidance artifacts.
-- Add stack, design, role, or skill artifacts only when the repository actually uses them.
+- Add stack, design, or skill artifacts only when the repository actually uses them.
 - Remove copied artifacts that the repository does not use.
 - Remove this setup file after it has been applied unless the repository explicitly keeps setup docs.
 - Do not invent files, commands, or conventions that are not present in the repository.
@@ -133,7 +116,7 @@ If there is no conflict, all linked documents apply together.
 Before finishing, verify that:
 - every linked file exists;
 - every linked file is relevant to the repository;
-- the generated `AGENTS.md` separates core required documents, additional guidance, role profiles, bundled skills, and repository-local routing;
+- the generated `AGENTS.md` separates core required documents, additional guidance, bundled skills, and repository-local routing;
 - the generated `AGENTS.md` requires explicit acknowledgement before substantial work;
 - no copied kit files remain without a clear purpose;
 - `AGENTS.setup.md` has been removed unless there is a clear reason to keep it;

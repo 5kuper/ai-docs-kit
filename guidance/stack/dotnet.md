@@ -18,10 +18,9 @@ It applies together with `agents/guidance/engineering-principles.md` unless a mo
 - Introducing or changing framework-level packages, target frameworks, SDK assumptions, or platform features.
 
 ## Command Execution
-- Use the bundled `dotnet-command` skill for `dotnet restore`, `dotnet build`, `dotnet test`, `dotnet publish`, and `dotnet pack` in agent or sandbox sessions.
-- The skill's wrapper exists to make .NET CLI execution more predictable in agent and sandbox environments by handling environment-level setup for the command.
-- Treat the wrapper as the default command path for .NET CLI work when repository-local guidance does not say otherwise.
-- Use direct `dotnet` commands only when the repository explicitly documents that they are safe in the current environment.
+- Run `dotnet restore`, `dotnet build`, `dotnet test`, `dotnet publish`, and `dotnet pack` directly from the target repository root, with an explicit solution or project when needed.
+- Diagnose SDK, filesystem permission, network, or package-source failures from the actual command output. Apply environment overrides only when a specific failure requires them, and keep overrides local to the process.
+- Verify the actual compiler/test output and exit code before reporting success. Preserve the target repository's test isolation requirements.
 
 ## Working Defaults
 - Respect the existing solution structure, application model, and target framework unless the task explicitly requires a change.

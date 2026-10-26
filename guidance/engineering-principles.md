@@ -21,6 +21,11 @@ These principles apply unless a more specific document says otherwise.
 - Prefer predictable and maintainable solutions over clever but harder-to-understand ones.
 - Keep entry points, integration boundaries, and orchestration code as simple as the repository's structure allows.
 
+## Task Intent
+- For review requests, report actionable findings grounded in files and behavior, ordered by severity. State verification gaps; edit implementation only when the user asks for changes.
+- For design requests, distinguish facts from assumptions, explain meaningful tradeoffs and compatibility impacts, and include a migration path when changing existing boundaries or data.
+- For implementation requests, complete the smallest change that satisfies the task. Fix mistakes introduced by your own work within that scope, and report what changed, what was checked, and any remaining gaps.
+
 ## Sensitive Data
 - Never commit real secrets, credentials, or tokens.
 - Never log secrets, credentials, tokens, or sensitive payload data.
